@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: flux
+  name: mynotify 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mynotifier
+  namespace: flux
+  labels:
+    language: go
+  annotations:
+    fluxcd.io/automated: "true"
+spec:
+  selector:
+    matchLabels:
+      app: mynotify
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mynotify
+    spec:
+      containers:
+      - name: hello-go
+        image: lenfree/flux-generic-notifier-webhook-alpha:v0.0.1-alpha 
+        ports:
+          - containerPort: 8080
+        command: ["bash"]
+        args: ["-c", "make", "run"]
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+          limits:
+              cpu: "500m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mynotify
+  namespace: flux
+  labels:
+    name: mynotify
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: mynotify
+  type: ClusterIP
