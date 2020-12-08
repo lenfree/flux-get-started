@@ -8,7 +8,6 @@ metadata:
     language: ruby
   annotations:
     fluxcd.io/automated: "true"
-    changes: "fix args"
 spec:
   selector:
     matchLabels:
@@ -26,7 +25,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: lenfree/hello-world:0.0.4
+        image: lenfree/hello-world:0.0.3
         ports:
         - containerPort: 8080
         resources:
