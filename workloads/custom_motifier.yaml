@@ -1,11 +1,4 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  labels:
-    name: flux
-  name: mynotify
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,11 +7,11 @@ metadata:
   labels:
     language: go
   annotations:
-    fluxcd.io/automated: "true"
+    flux-systemcd.io/automated: "true"
 spec:
   selector:
     matchLabels:
-      app: mynotify
+      app: mynotifier
   replicas: 1
   strategy:
     rollingUpdate:
@@ -28,10 +21,10 @@ spec:
   template:
     metadata:
       labels:
-        app: mynotify
+        app: mynotifier
     spec:
       containers:
-      - name: hello-go
+      - name: mynotifier 
         image: lenfree/flux-generic-notifier-webhook-alpha:v0.0.3-alpha
         ports:
         - containerPort: 8080
@@ -48,15 +41,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mynotify
-  namespace: flux
+  name: mynotifier
+  namespace: flux-system
   labels:
-    name: mynotify
+    name: mynotifier
 spec:
   ports:
   - port: 80
     targetPort: 8080
     protocol: TCP
   selector:
-    app: mynotify
+    app: mynotifier
   type: ClusterIP
