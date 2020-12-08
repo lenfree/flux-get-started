@@ -12,6 +12,7 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
 metadata:
   name: on-call-webapp
+  namespace: flux
 spec:
   providerRef: 
     name: generic 
