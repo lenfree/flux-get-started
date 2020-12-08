@@ -3,10 +3,23 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Provider
 metadata:
   name: generic
-  namespace: default
+  namespace: flux
 spec:
-  type: slack
-  channel: general
-  address: http://mynotify.flux.svc.cluster.local
-    secretRef:
-  name: webhook-url
+  type: generic 
+  address: http://mynotify.flux.svc.cluster.local/somePost
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Alert
+metadata:
+  name: on-call-webapp
+spec:
+  providerRef: 
+    name: generic 
+  eventSeverity: info
+  eventSources:
+    - kind: GitRepository
+      name: '*'
+    - kind: Kustomization
+      name: webapp-frontend
+    - kind: Kustomization
+      name: webapp-backend
