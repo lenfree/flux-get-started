@@ -8,6 +8,7 @@ metadata:
     language: ruby
   annotations:
     fluxcd.io/automated: "true"
+    changes: "fix args"
 spec:
   selector:
     matchLabels:
