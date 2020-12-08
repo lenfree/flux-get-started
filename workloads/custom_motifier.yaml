@@ -42,7 +42,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mynotifier
-  namespace: flux-system
+  namespace: flux
   labels:
     name: mynotifier
 spec:
