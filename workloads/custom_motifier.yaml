@@ -4,7 +4,7 @@ kind: Namespace
 metadata:
   labels:
     name: flux
-  name: mynotify 
+  name: mynotify
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -32,9 +32,9 @@ spec:
     spec:
       containers:
       - name: hello-go
-        image: lenfree/flux-generic-notifier-webhook-alpha:v0.0.1-alpha 
+        image: lenfree/flux-generic-notifier-webhook-alpha:v0.0.3-alpha
         ports:
-          - containerPort: 8080
+        - containerPort: 8080
         command: ["bash"]
         args: ["-c", "make", "run"]
         resources:
@@ -42,8 +42,8 @@ spec:
             cpu: "250m"
             memory: "128Mi"
           limits:
-              cpu: "500m"
-              memory: "256Mi"
+            cpu: "500m"
+            memory: "256Mi"
 ---
 apiVersion: v1
 kind: Service
@@ -54,9 +54,9 @@ metadata:
     name: mynotify
 spec:
   ports:
-    - port: 80
-      targetPort: 8080
-      protocol: TCP
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
   selector:
     app: mynotify
   type: ClusterIP
