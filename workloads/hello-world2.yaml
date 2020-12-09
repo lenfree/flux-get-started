@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: hello-world-app2
-        image: lenfree/hello-world:0.0.8
+        image: lenfree/hello-world:0.0.9
         ports:
         - containerPort: 8080
         resources:
