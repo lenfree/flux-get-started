@@ -1,0 +1,27 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rabbitmq
+  app.kubernetes.io/name: rabbitmq
+  namespace: default
+spec:
+  chart:
+    # get chart from master, vlaues are per environment
+    git: ssh://github.com:lenfree/flux-get-started
+    path: charts/bitnami/rabbitmq
+    version: 7.6.3
+  values:
+    resources:
+      limits:
+        memory: 500Mi
+        cpu: 500m
+      requests:
+        memory: 500Mi
+        cpu: 100m
+auth:
+  # reuse password that had been set previously rather than changes the secret would
+  # break RabbitMQ New Relic integration as well as apps consuming this service
+  password: user 
+  # use default config for tls setup which is disabled
+

@@ -1,0 +1,4 @@
+image:
+   registry: 636269464086.dkr.ecr.ap-southeast-2.amazonaws.com      
+   repository: rabbitmq
+   tag: latest
