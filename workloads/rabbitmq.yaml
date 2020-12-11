@@ -8,7 +8,7 @@ metadata:
 spec:
   chart:
     # get chart from master, vlaues are per environment
-    git: ssh://git@github.com:lenfree/flux-get-started.git
+    git: git@github.com:lenfree/flux-get-started
     ref: master
     path: charts/bitnami/rabbitmq
     version: 7.6.3
