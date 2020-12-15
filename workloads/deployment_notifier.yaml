@@ -64,13 +64,6 @@ metadata:
  name: list-pods
  namespace: flux
 rules:
- — apiGroups:
-   — ''
-   resources:
-     — pods
-     - deployments
-     - services
-     - replicasets
-   verbs:
-     — list
-     - get
+- apiGroups: ["apps"]
+  resources: ["pods", "replicationcontrollers","services","nodes", "configmaps", "deployments", "namespaces", "daemonsets","replicasets"]
+  verbs: ["get", "watch", "list"]
