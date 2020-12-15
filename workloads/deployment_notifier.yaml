@@ -22,7 +22,7 @@ spec:
     metadata:
       labels:
         app: notify-deployment
-    speck:
+    spec:
       containers:
       - name: notify-deployment
         image: lenfree/notify_deployment:0.0.1
