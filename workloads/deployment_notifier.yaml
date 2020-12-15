@@ -26,14 +26,14 @@ spec:
       serviceAccountName: list-pods
       containers:
       - name: notify-deployment
-        image: lenfree/notify_deployment:0.0.4
+        image: lenfree/notify_deployment:0.0.5
         ports:
         - containerPort: 5000
         env:
-          - name: SECRET_KEY_BASE
+        - name: SECRET_KEY_BASE
             # This shoud not be in Git but since this is just for a spike, I can
             # live with this
-            value: eglQNvZ2QqLT0dHnkTpErVrNvAJvGz73XwPqbuGxWNEU0GBLJP4p6z1MED+MWOlv
+          value: eglQNvZ2QqLT0dHnkTpErVrNvAJvGz73XwPqbuGxWNEU0GBLJP4p6z1MED+MWOlv
         resources:
           requests:
             cpu: "250m"
@@ -61,11 +61,12 @@ spec:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
- name: list-pods
- namespace: flux
+  name: list-pods
+  namespace: flux
 rules:
 - apiGroups: ["apps"]
-  resources: ["pods", "replicationcontrollers","services","nodes", "configmaps", "deployments", "namespaces", "daemonsets","replicasets"]
+  resources: ["pods", "replicationcontrollers", "services", "nodes", "configmaps",
+    "deployments", "namespaces", "daemonsets", "replicasets"]
   verbs: ["get", "watch", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -78,9 +79,9 @@ roleRef:
   kind: ClusterRole
   name: list-pods
 subjects:
-  - kind: ServiceAccount
-    name: list-pods
-    namespace: flux
+- kind: ServiceAccount
+  name: list-pods
+  namespace: flux
 ---
 apiVersion: v1
 kind: ServiceAccount
