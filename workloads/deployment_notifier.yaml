@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: notify-deployment
-        image: lenfree/notify_deployment:0.0.2
+        image: lenfree/notify_deployment:0.0.3
         ports:
         - containerPort: 5000
         env:
