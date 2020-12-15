@@ -8,7 +8,6 @@ metadata:
     language: elixir
   annotations:
     fluxcd.io/automated: "true"
-  serviceAccountName: list-pods
 spec:
   selector:
     matchLabels:
@@ -24,6 +23,7 @@ spec:
       labels:
         app: notify-deployment
     spec:
+      serviceAccountName: list-pods
       containers:
       - name: notify-deployment
         image: lenfree/notify_deployment:0.0.4
