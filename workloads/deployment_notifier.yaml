@@ -5,7 +5,7 @@ metadata:
   name: notify-deployment
   namespace: flux
   labels:
-    language: go
+    language: elixir
   annotations:
     flux-systemcd.io/automated: "true"
 spec:
@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: notify-deployment
-        image: lenfree/notify_deployment:0.0.1
+        image: lenfree/notify_deployment:0.0.2
         ports:
         - containerPort: 5000
         env:
