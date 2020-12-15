@@ -8,6 +8,7 @@ metadata:
     language: elixir
   annotations:
     fluxcd.io/automated: "true"
+  serviceAccountName: list-pods
 spec:
   selector:
     matchLabels:
@@ -56,3 +57,20 @@ spec:
   selector:
     app: notify-deployment
   type: ClusterIP
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+ name: list-pods
+ namespace: flux
+rules:
+ — apiGroups:
+   — ''
+ resources:
+   — pods
+   - deployments
+   - services
+   - replicasets
+ verbs:
+   — list
+   - get
