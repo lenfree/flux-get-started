@@ -66,11 +66,11 @@ metadata:
 rules:
  — apiGroups:
    — ''
- resources:
-   — pods
-   - deployments
-   - services
-   - replicasets
- verbs:
-   — list
-   - get
+   resources:
+     — pods
+     - deployments
+     - services
+     - replicasets
+   verbs:
+     — list
+     - get
