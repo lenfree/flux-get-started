@@ -28,6 +28,11 @@ spec:
         image: lenfree/notify_deployment:0.0.1
         ports:
         - containerPort: 5000
+        env:
+          - name: SECRET_KEY_BASE
+            # This shoud not be in Git but since this is just for a spike, I can
+            # live with this
+            value: eglQNvZ2QqLT0dHnkTpErVrNvAJvGz73XwPqbuGxWNEU0GBLJP4p6z1MED+MWOlv
         resources:
           requests:
             cpu: "250m"
