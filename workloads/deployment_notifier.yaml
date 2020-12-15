@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notify_deployment
+  namespace: flux
+  labels:
+    language: go
+  annotations:
+    flux-systemcd.io/automated: "true"
+spec:
+  selector:
+    matchLabels:
+      app: notify_deployment
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: notify_deployment
+    speck:
+      containers:
+      - name: notify_deployment 
+        image: lenfree/notify_deployment:0.0.1
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notify_deployment
+  namespace: flux
+  labels:
+    name: notify_deployment
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: notify_deployment
+  type: ClusterIP
