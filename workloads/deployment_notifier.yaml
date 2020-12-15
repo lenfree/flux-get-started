@@ -81,7 +81,6 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: list-pods
-    namespace: flux
 ---
 apiVersion: v1
 kind: ServiceAccount
