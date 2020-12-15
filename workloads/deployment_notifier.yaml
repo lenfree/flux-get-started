@@ -26,7 +26,7 @@ spec:
       serviceAccountName: list-pods
       containers:
       - name: notify-deployment
-        image: lenfree/notify_deployment:0.0.15
+        image: lenfree/notify_deployment:0.0.16
         ports:
         - containerPort: 5000
         env:
