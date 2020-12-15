@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: notify_deployment
+  name: notify-deployment
   namespace: flux
   labels:
     language: go
@@ -11,7 +11,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: notify_deployment
+      app: notify-deployment
   replicas: 1
   strategy:
     rollingUpdate:
@@ -21,10 +21,10 @@ spec:
   template:
     metadata:
       labels:
-        app: notify_deployment
+        app: notify-deployment
     speck:
       containers:
-      - name: notify_deployment 
+      - name: notify-deployment
         image: lenfree/notify_deployment:0.0.1
         ports:
         - containerPort: 5000
@@ -39,15 +39,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: notify_deployment
+  name: notify-deployment
   namespace: flux
   labels:
-    name: notify_deployment
+    name: notify-deployment
 spec:
   ports:
   - port: 80
     targetPort: 8080
     protocol: TCP
   selector:
-    app: notify_deployment
+    app: notify-deployment
   type: ClusterIP
