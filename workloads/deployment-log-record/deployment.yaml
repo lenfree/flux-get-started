@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-go
+  name: Lenfree-test-deploy-go
   namespace: default
   labels:
     language: go
