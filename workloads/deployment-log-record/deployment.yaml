@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: hello-go
-        image: lenfree/go-deployment-record:0.0.7
+        image: lenfree/go-deployment-record:0.0.1
         ports:
         - containerPort: 8080
         command: ["bash"]
