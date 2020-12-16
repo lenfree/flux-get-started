@@ -43,12 +43,12 @@ spec:
             cpu: "500m"
             memory: "256Mi"
         env:
-        - name: NEW_RELIC_API_KEY
+        - name: MY_APP_NEW_RELIC_API_KEY
           valueFrom:
             secretKeyRef:
               name: api-key
               key: NEW_RELIC_API_KEY
-        - name: NEW_RELIC_LICENSE_KEY
+        - name: MY_APP_NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
               name: license-key
