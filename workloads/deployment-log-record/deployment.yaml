@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-go
+  namespace: deployment
+  labels:
+    language: go
+  annotations:
+    owner: lenfree
+    fluxcd.io/automated: "true"
+spec:
+  selector:
+    matchLabels:
+      app: hello-go
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: hello-go
+      annotations:
+        # Update below only when updating release only. For scaling operations, this should be be
+        # touched. Otherwise, K8s will trigger a new rollout.
+        kubernetes.io/change-cause: "bump version with serving / path"
+    spec:
+      containers:
+      - name: hello-go
+        image: lenfree/go-deployment-record:0.0.7
+        ports:
+        - containerPort: 8080
+        command: ["bash"]
+        args: ["-c", "make", "run"]
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        env:
+        - name: NEW_RELIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-key
+              key: NEW_RELIC_API_KEY
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: license-key
+              key: NEW_RELIC_LICENSE_KEY
