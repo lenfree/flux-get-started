@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: lenfree/hello-world:0.0.36
+        image: lenfree/hello-world:0.0.37
         ports:
         - containerPort: 8080
         resources:
