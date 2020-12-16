@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Lenfree-test-deploy-go
+  name: lenfree-deploy-test-go
   namespace: default
   labels:
     language: go
@@ -53,3 +53,5 @@ spec:
             secretKeyRef:
               name: license-key
               key: NEW_RELIC_LICENSE_KEY
+        - name: MY_APP_NEW_RELIC_LABELS
+          value: "cluster=minikube"
