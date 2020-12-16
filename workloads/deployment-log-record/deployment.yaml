@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-go
-  namespace: deployment
+  namespace: default
   labels:
     language: go
   annotations:
