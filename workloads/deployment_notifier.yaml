@@ -34,6 +34,11 @@ spec:
             # This shoud not be in Git but since this is just for a spike, I can
             # live with this
           value: eglQNvZ2QqLT0dHnkTpErVrNvAJvGz73XwPqbuGxWNEU0GBLJP4p6z1MED+MWOlv
+        - name: NEW_RELIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-key
+              key: NEW_RELIC_API_KEY
         resources:
           requests:
             cpu: "250m"
