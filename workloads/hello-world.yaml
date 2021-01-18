@@ -8,6 +8,7 @@ metadata:
     language: ruby
   annotations:
     fluxcd.io/automated: "true"
+    nr_app_id: 2833002
 spec:
   selector:
     matchLabels:
