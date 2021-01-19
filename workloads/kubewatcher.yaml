@@ -1,0 +1,60 @@
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kubewatch2
+rules:
+- apiGroups: [""]
+  resources: ["pods", "replicationcontrollers","services","nodes", "configmaps", "deployments", "namespaces", "daemonsets", "persistentvolumes", "serviceaccounts", "secrets"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["apps"]
+  resources: ["pods", "replicationcontrollers","services","nodes", "configmaps", "deployments", "namespaces", "daemonsets","replicasets"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["extensions"]
+  resources: ["pods", "replicationcontrollers","services","nodes", "configmaps", "deployments", "namespaces", "daemonsets", "clusterroles", "ingresses"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["rbac.authorization.k8s.io"]
+  resources: ["clusterroles"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubewatch2
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: kubewatch2
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubewatch
+subjects:
+  - kind: ServiceAccount
+    name: kubewatch2
+    namespace: default
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubewatch2
+data:
+  .kubewatch.yaml: |
+    namespace: ""
+    handler:
+      webhook:
+        url: "http://equerry.flux.svc.cluster.local/deployment/events"
+    resource:
+      deployment: 
+      replicationcontroller: true
+      replicaset: true
+      daemonset: true
+      services: true
+      pod: true
+      secret: true
+      configmap: true

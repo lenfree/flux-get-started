@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: equerry
+  namespace: flux
+  labels:
+    language: elixir
+spec:
+  selector:
+    matchLabels:
+      app: equerry 
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: equerry 
+    spec:
+      containers:
+      - name: equerry 
+        image: lenfree/equerry:0.1.0
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: equerry 
+  namespace: flux
+  labels:
+    name: equerry 
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: equerry 
+  type: ClusterIP
