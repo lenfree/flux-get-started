@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app: equerry
-  replicas: 2
+  replicas: 1
   strategy:
     rollingUpdate:
       maxSurge: 1
