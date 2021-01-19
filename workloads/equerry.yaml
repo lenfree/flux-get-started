@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app: equerry
-  replicas: 1
+  replicas: 2
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -27,6 +27,22 @@ spec:
         image: lenfree/equerry:0.0.1
         ports:
         - containerPort: 5000
+        # This signal K8 controller that the container is broken and requires the scheduler to heal it by restarting it.
+        livenessProbe:
+          httpGet:
+            path: /api/status
+            port: 5000
+          # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds. Minimum value is 0.
+          # Until I fix the startup compilation time
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /api/status
+            port: 5000
+          initialDelaySeconds: 60
+          periodSeconds: 3
         env:
         - name: SECRET_KEY_BASE
           # This shoud not be in Git but since this is just for a spike, I can
@@ -91,3 +107,4 @@ kind: ServiceAccount
 metadata:
   name: equerry-list-pods
   namespace: flux
+
