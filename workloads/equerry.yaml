@@ -2,14 +2,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: equerry
+u name: equerry
   namespace: flux
   labels:
     language: elixir
 spec:
   selector:
     matchLabels:
-      app: equerry 
+      app: equerry
   replicas: 1
   strategy:
     rollingUpdate:
@@ -19,16 +19,24 @@ spec:
   template:
     metadata:
       labels:
-        app: equerry 
+        app: equerry
     spec:
+      serviceAccountName: equerry-list-pods
       containers:
-      - name: equerry 
+      - name: equerry
         image: lenfree/equerry:0.1.0
         ports:
-        - containerPort: 8080
+        - containerPort: 5000
         env:
         - name: SECRET_KEY_BASE
-          value: "rlY5bXBKwEoYCXTvg4kX37CGXZMJsLtQG20FEG00nlfPxbSEQ/FooQrx1gXg6Wtk"
+            # This shoud not be in Git but since this is just for a spike, I can
+            # live with this
+          value: eglQNvZ2QqLT0dHnkTpErVrNvAJvGz73XwPqbuGxWNEU0GBLJP4p6z1MED+MWOlv
+        - name: NEW_RELIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-key
+              key: NEW_RELIC_API_KEY
         resources:
           requests:
             cpu: "250m"
@@ -40,15 +48,46 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: equerry 
+  name: equerry
   namespace: flux
   labels:
-    name: equerry 
+    name: equerry
 spec:
   ports:
   - port: 80
     targetPort: 5000
     protocol: TCP
   selector:
-    app: equerry 
+    app: equerry
   type: ClusterIP
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: equerry-list-pods
+  namespace: flux
+rules:
+- apiGroups: ["apps"]
+  resources: ["pods", "replicationcontrollers", "services", "nodes", "configmaps",
+    "deployments", "namespaces", "daemonsets", "replicasets"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: equerry-list-pods
+  namespace: flux
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: equerry-list-pods
+subjects:
+- kind: ServiceAccount
+  name: equerry-list-pods
+  namespace: flux
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: equerry-list-pods
+  namespace: flux
