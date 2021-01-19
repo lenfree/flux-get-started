@@ -73,6 +73,7 @@ metadata:
   name: kubewatch2
   namespace: default
 spec:
+  serviceAccountName: kubewatch2
   containers:
   - image: docker.io/bitnami/kubewatch:0.1.0-debian-10-r133
     imagePullPolicy: Always
