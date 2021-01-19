@@ -82,7 +82,7 @@ spec:
     name: kubewatch
     volumeMounts:
     - name: config-volume
-      mountPath: /opt/bitnami/kubewatch/.kubewatch.yaml
+      mountPath: /opt/bitnami/kubewatch
   restartPolicy: Always
   volumes:
   - name: config-volume
