@@ -49,7 +49,7 @@ data:
     handler:
       webhook:
         enabled: true
-        url: "http://equerry.flux.svc.cluster.local/deployment/events"
+        url: "http://equerry.flux.svc.cluster.local/api/deployment/events"
     resource:
       clusterrole: true
       configmap: true
