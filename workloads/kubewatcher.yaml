@@ -58,3 +58,22 @@ data:
       pod: true
       secret: true
       configmap: true
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubewatch2
+  namespace: default
+spec:
+  containers:
+  - image: tuna/kubewatch:v0.0.1
+    imagePullPolicy: Always
+    name: kubewatch2
+    volumeMounts:
+    - name: config-volume
+      mountPath: /root
+  restartPolicy: Always
+  volumes:
+  - name: config-volume
+    configMap:
+      name: kubewatch2
