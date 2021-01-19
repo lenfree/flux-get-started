@@ -28,6 +28,9 @@ spec:
         image: lenfree/hello-world:0.0.53
         ports:
         - containerPort: 8080
+        env:
+        - name: HELLO
+          value: WORLD
         resources:
           requests:
             cpu: "250m"
