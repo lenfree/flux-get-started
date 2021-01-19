@@ -2,7 +2,8 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: kubewatch2
+  name: kubewatch
+  namespace: flux
 rules:
 - apiGroups: [""]
   resources: ["pods", "replicationcontrollers","services","nodes", "configmaps", "deployments", "namespaces", "daemonsets", "persistentvolumes", "serviceaccounts", "secrets"]
@@ -23,26 +24,27 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kubewatch2
-  namespace: default
+  name: kubewatch
+  namespace: flux
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: kubewatch2
+  name: kubewatch
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: kubewatch2
+  name: kubewatch
 subjects:
   - kind: ServiceAccount
-    name: kubewatch2
-    namespace: default
+    name: kubewatch
+    namespace: flux
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: kubewatch2
+  name: kubewatch
+  namespace: flux
 data:
   .kubewatch.yaml: |
     namespace: ""
@@ -70,14 +72,14 @@ data:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: kubewatch2
-  namespace: default
+  name: kubewatch
+  namespace: flux 
 spec:
-  serviceAccountName: kubewatch2
+  serviceAccountName: kubewatch
   containers:
   - image: docker.io/bitnami/kubewatch:0.1.0-debian-10-r133
     imagePullPolicy: Always
-    name: kubewatch2
+    name: kubewatch
     volumeMounts:
     - name: config-volume
       mountPath: /root
@@ -85,4 +87,4 @@ spec:
   volumes:
   - name: config-volume
     configMap:
-      name: kubewatch2
+      name: kubewatch
