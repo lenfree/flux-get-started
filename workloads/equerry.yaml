@@ -25,6 +25,7 @@ spec:
       containers:
       - name: equerry
         image: lenfree/equerry:0.1.0
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         env:
