@@ -7,7 +7,6 @@ metadata:
   labels:
     language: ruby
   annotations:
-    fluxcd.io/automated: "true"
     nr_app_id: "698570622"
 spec:
   selector:
@@ -26,7 +25,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: lenfree/hello-world:0.0.55
+        image: lenfree/hello-world:0.0.45
         ports:
         - containerPort: 8080
         resources:
