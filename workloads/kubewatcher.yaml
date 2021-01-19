@@ -48,16 +48,24 @@ data:
     namespace: ""
     handler:
       webhook:
+        enabled: true
         url: "http://equerry.flux.svc.cluster.local/deployment/events"
     resource:
-      deployment: 
-      replicationcontroller: true
-      replicaset: true
-      daemonset: true
-      services: true
-      pod: true
-      secret: true
+      clusterrole: true
       configmap: true
+      daemonset: true
+      deployment: true
+      ingress: true
+      job: true
+      namespace: true
+      node: true
+      persistentvolume: true
+      pod: true
+      replicaset: true
+      replicationcontroller: true
+      secret: true
+      serviceaccount: true
+      services: true
 ---
 apiVersion: v1
 kind: Pod
