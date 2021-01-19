@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-u name: equerry
+  name: equerry
   namespace: flux
   labels:
     language: elixir
