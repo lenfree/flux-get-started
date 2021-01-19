@@ -26,6 +26,9 @@ spec:
         image: lenfree/equerry:0.1.0
         ports:
         - containerPort: 8080
+        env:
+        - name: SECRET_KEY_BASE
+          value: "rlY5bXBKwEoYCXTvg4kX37CGXZMJsLtQG20FEG00nlfPxbSEQ/FooQrx1gXg6Wtk"
         resources:
           requests:
             cpu: "250m"
